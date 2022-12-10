@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{fragments/imports.html}"/>
+    <script th:src="@{/js/chosen-js/chosen.jquery.min.js}"
+            crossorigin="anonymous"></script>
+    <title>Add Cruise</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/header.html}"/>
+<div class="container auth-box">
+    <form class="col flex-column" action="${pageContext.request.contextPath}/cruise/do_add_cruise" method="post"
+          enctype="multipart/form-data">
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label for="ship" class="ms-2 position-absolute mtext">
+                    <span class="h6 small bg-white text-muted px-1">
+                        Ship
+                    </span>
+                </label>
+                <input list="ships" type="text" class="form-control mt-2" name="ship" id="ship">
+                <datalist id="ships">
+                    <option th:each="ship : ${shipList}" th:value="${ship.id}" th:text="${ship.name}"></option>
+                </datalist>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label for="price" class="ms-2 position-absolute mtext">
+                    <span class="h6 small bg-white text-muted px-1">Price</span>
+                </label>
+                <input type="text" class="form-control mt-2" name="price" id="price">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label for="date_departure" class="ms-2 position-absolute mtext2">
+                    <span class="h6 small bg-white text-muted px-1">Departure</span>
+                </label>
+                <input id="date_departure" class="form-control" type="date" name="date_departure"/>
+            </div>
+            <div class="col px-1 mb-2">
+                <label for="date_arrival" class="ms-2 position-absolute mtext2">
+                    <span class="h6 small bg-white text-muted px-1">Arrival</span>
+                </label>
+                <input id="date_arrival" class="form-control" type="date" name="date_arrival"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label for="time_departure" class="ms-2 position-absolute mtext">
+                    <span class="h6 small bg-white text-muted px-1">Time</span>
+                </label>
+                <input type="time" class="form-control mt-2" id="time_departure" name="time_departure">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label for="stations" class="ms-2 position-absolute mtext">
+                    <span class="h6 small bg-white text-muted px-1">Stations</span>
+                </label>
+                <select class="chosen-select form-control mt-2" id="stations" tabindex="8" multiple
+                        name="stations" data-placeholder="Select stations">
+                    <option th:each="station : ${stationList}" th:value="${station.id}">
+                        <th:block th:text="${station.city}"/>
+                        ,
+                        <th:block th:text="${station.country}"/>
+                    </option>
+                </select>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label for="description" class="ms-2 position-absolute mtext">
+                    <span class="h6 small bg-white text-muted px-1">Description</span>
+                </label>
+                <textarea class="form-control mt-2" name="description" id="description" rows="4" cols="40"
+                          maxlength="1024"></textarea>
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <span class="col-auto px-1 mb-2">
+                <button class="btn btn-jade" type="submit">Add</button>
+            </span>
+        </div>
+
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".chosen-select").chosen();
+    });
+</script>
+</body>
+</html>

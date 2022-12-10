@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{fragments/imports.html}"/>
+    <title> Find Cruise | Cruise company</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/header.html}"/>
+<div class="container">
+    <th:block th:each="cruise : ${cruiseList}">
+        <div class="container item-box justify-content-center text-center bd-search">
+            <div class="row">
+                <div class="col ">
+                    <img th:src="@{images/ship.jpg}" height="360"
+                         width="480" alt="ship"/>
+
+                </div>
+                <div class="col d-flex flex-column ">
+                    <div class="text-start fw-bold fs-4">
+                        <th:block th:text="${cruise.stationList[0].station.city}"/>,
+                        <th:block th:text="${cruise.stationList[0].station.country}"/>
+                    </div>
+                    <div class="text-start fw-bold fs-6 mt-sm-0">Black Pearl</div>
+                    <div class="align-items-center ">
+                        <div class="d-flex flex-row">
+                            <div class="sm-circle bg-jade me-2">
+                                <div class="fw-bold fs-5 text-white me-none" th:text="${cruise.daysTotal}"></div>
+                                <div class="text-white">
+                                    DAYS
+                                </div>
+                            </div>
+                            <div class="text-start align-self-center">
+                                <th:block th:text="${cruise.stationList[0].station.city}"/> ->
+                                <th:block th:text="${cruise.stationList[1].station.city}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-start text-wrap mb-0" th:text="${cruise.timeDeparture}">
+                    </p>
+                    <p class="text-start text-wrap mt-0">
+                        Departure date:
+                        <th:block th:text="${cruise.dateDeparture}"/>
+                        Arrival date:
+                        <th:block th:text="${cruise.dateArrival}"/>
+                    </p>
+                    <p class="text-start text-wrap" th:text="${cruise.description}"></p>
+                    <div class="row align-self-end mt-auto">
+                        <th:block th:text="${cruise.ticketsPurchased}"/>/100
+                    </div>
+                    <div class="row align-self-end">
+                        <th:block th:text="${cruise.price}"/>$
+
+                        <a href="/sign_in"
+                           class="col btn btn-jade-reversed">
+                            Buy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+
+</div>
+<!--
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
+     aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header bg-jade">
+        <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" style="color:white">
+            <fmt:message bundle="${loc}" key="lang.filter_cruises"/>
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form class="col" action="${pageContext.request.contextPath}/cruise/find_cruise" method="get">
+            <input type="hidden" name="limit" value="${limit}">
+            <div class="row mb-2">
+                <div class="col flex-column ">
+                    <label for="dateFrom"><fmt:message bundle="${loc}" key="lang.from"/>:</label>
+                    <input id="dateFrom" class="form-control" type="date" name="dateFrom" value="${dateFrom}"
+                           onchange="setMinDateForDateTo()"/>
+                </div>
+                <div class="col flex-column ">
+                    <label for="dateTo"><fmt:message bundle="${loc}" key="lang.to"/>:</label>
+                    <input id="dateTo" class="form-control" type="date" name="dateTo" value="${dateTo}"
+                           onchange="setMaxDateForDateFrom()"/>
+                </div>
+            </div>
+            <div class="fw-bold me-none">
+                <hr>
+            </div>
+            <div class="col flex-column mb-2">
+                <label for="duration"><fmt:message bundle="${loc}" key="lang.duration"/>:</label>
+                <select class="form-select" aria-label="Select duration" name="duration" id="duration">
+                    <option ${empty param.duration ? 'selected':''}><fmt:message bundle="${loc}"
+                                                                                 key="lang.all"/></option>
+                    <option value="1" ${param.duration eq '1' ? 'selected':''}>2 - 5 <fmt:message bundle="${loc}"
+                                                                                                  key="lang.days"/></option>
+                    <option value="2" ${param.duration eq '2' ? 'selected':''}>6 - 9 <fmt:message bundle="${loc}"
+                                                                                                  key="lang.days"/></option>
+                    <option value="3" ${param.duration eq '3' ? 'selected':''}>10+ <fmt:message bundle="${loc}"
+                                                                                                key="lang.days"/></option>
+                </select>
+            </div>
+            <div class="d-flex flex-row justify-content-end">
+                <button class="btn btn-jade-reversed text-wrap" type="submit"><fmt:message bundle="${loc}"
+                                                                                           key="lang.apply"/></button>
+            </div>
+        </form>
+    </div>
+</div>
+-->
+<script>
+    document.querySelectorAll("#limit").forEach(e => {
+        e.addEventListener(
+            'change',
+            function (event) {
+                let url = new URL(document.location.href);
+                url.searchParams.set("page", "1");
+                url.searchParams.set("limit", e.value);
+                document.location.href = url.toString();
+            },
+            false
+        );
+    });
+    document.querySelectorAll("button.page-link").forEach(e => {
+        e.addEventListener(
+            'click',
+            function (event) {
+                let url = new URL(document.location.href);
+                url.searchParams.set("page", e.value);
+                document.location.href = url.toString();
+            },
+            false
+        );
+    });
+</script>
+<script src="/static/js/filter_validator.js"></script>
+</body>
+</html>
