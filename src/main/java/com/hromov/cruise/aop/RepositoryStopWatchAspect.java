@@ -30,7 +30,7 @@ public class RepositoryStopWatchAspect {
             throw new RuntimeException();
         } finally {
             stopWatch.stop();
-            LOGGER.error("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
+            LOGGER.debug("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
         }
     }
 }
