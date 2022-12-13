@@ -1,75 +1,25 @@
 package com.hromov.cruise.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import lombok.Data;
 
-import java.io.Serializable;
-
+@Data
 @Entity
-public class Staff implements Serializable {
+@Table(name = "staff")
+public class Staff {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "staff_id")
     private long id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "speciality")
     private String speciality;
     @OneToOne
     @JoinColumn(name = "ship_id")
     private Ship ship;
-
-    public long getId() {
-        return id;
-    }
-
-    public Staff setId(long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public Staff setFirstName(String firstName) {
-        this.firstName = firstName;
-        return this;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public Staff setLastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Staff setPhone(String phone) {
-        this.phone = phone;
-        return this;
-    }
-
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public Staff setSpeciality(String speciality) {
-        this.speciality = speciality;
-        return this;
-    }
-
-    public Ship getShip() {
-        return ship;
-    }
-
-    public Staff setShip(Ship ship) {
-        this.ship = ship;
-        return this;
-    }
 }
