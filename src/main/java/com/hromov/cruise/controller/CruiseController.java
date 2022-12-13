@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 public class CruiseController {
-
     private CruiseService cruiseService;
     private ShipService shipService;
     private StationService stationService;
