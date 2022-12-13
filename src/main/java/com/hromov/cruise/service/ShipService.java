@@ -1,6 +1,6 @@
 package com.hromov.cruise.service;
 
-import com.hromov.cruise.domain.Ship;
+import com.hromov.cruise.model.Ship;
 
 import java.util.List;
 

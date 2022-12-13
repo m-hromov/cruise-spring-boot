@@ -1,7 +1,6 @@
 package com.hromov.cruise.service;
 
-import com.hromov.cruise.domain.Cruise;
-import org.springframework.stereotype.Service;
+import com.hromov.cruise.model.Cruise;
 
 import java.util.List;
 

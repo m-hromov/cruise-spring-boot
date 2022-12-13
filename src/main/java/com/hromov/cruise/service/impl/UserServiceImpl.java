@@ -1,6 +1,6 @@
 package com.hromov.cruise.service.impl;
 
-import com.hromov.cruise.domain.User;
+import com.hromov.cruise.model.User;
 import com.hromov.cruise.repository.UserRepository;
 import com.hromov.cruise.service.UserService;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.hromov.cruise.domain;
+package com.hromov.cruise.model;
 
 import jakarta.persistence.*;
 
@@ -18,22 +18,16 @@ public class Cruise implements Serializable {
     @Column(name = "time_departure")
     private LocalTime timeDeparture;
     @Column(name = "date_departure")
-
     private LocalDate dateDeparture;
     @Column(name = "date_arrival")
-
     private LocalDate dateArrival;
     @Column(name = "days_total")
-
     private Integer daysTotal;
     @Column(name = "price")
-
     private BigDecimal price;
     @Column(name = "description")
-
     private String description;
     @Column(name = "tickets_purchased")
-
     private Integer ticketsPurchased;
     @OneToMany(mappedBy = "cruise")
     @OrderBy("orderNumber ASC")

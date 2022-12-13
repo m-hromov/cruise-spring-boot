@@ -3,6 +3,7 @@ package com.hromov.cruise.aop;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -11,9 +12,9 @@ import org.springframework.util.StopWatch;
 
 @Aspect
 @Component
-public class RepositoryStopWatchAspect {
+public class RepositoryAspect {
 
-    private static final Logger LOGGER = LogManager.getLogger(RepositoryStopWatchAspect.class);
+    private static final Logger LOGGER = LogManager.getLogger(RepositoryAspect.class);
 
     @Around("execution(public * com.hromov.cruise.repository.*.*(..))")
     public Object printExecutionTimeOfGetListMethods(ProceedingJoinPoint pjp) {
@@ -32,5 +33,11 @@ public class RepositoryStopWatchAspect {
             stopWatch.stop();
             LOGGER.debug("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
         }
+    }
+
+    @AfterThrowing(pointcut = "execution(public * com.hromov.cruise.repository.*.*(..))",
+            throwing = "ex")
+    public void logRepositoryExceptions(Exception ex) {
+        LOGGER.error(ex);
     }
 }

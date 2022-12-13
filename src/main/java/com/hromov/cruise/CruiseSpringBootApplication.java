@@ -1,6 +1,6 @@
 package com.hromov.cruise;
 
-import com.hromov.cruise.domain.Cruise;
+import com.hromov.cruise.model.Cruise;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

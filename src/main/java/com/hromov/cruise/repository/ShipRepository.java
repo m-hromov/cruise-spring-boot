@@ -1,6 +1,6 @@
 package com.hromov.cruise.repository;
 
-import com.hromov.cruise.domain.Ship;
+import com.hromov.cruise.model.Ship;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

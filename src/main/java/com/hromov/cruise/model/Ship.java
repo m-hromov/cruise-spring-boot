@@ -1,4 +1,4 @@
-package com.hromov.cruise.domain;
+package com.hromov.cruise.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
