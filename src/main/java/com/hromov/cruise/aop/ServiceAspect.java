@@ -1,7 +1,6 @@
 package com.hromov.cruise.aop;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,12 +8,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+@Log4j2
 @Aspect
 @Component
-public class ServiceStopWatchAspect {
-
-    private static final Logger LOGGER = LogManager.getLogger(ServiceStopWatchAspect.class);
-
+public class ServiceAspect {
     @Around("execution(public * *(..)) && within(com.hromov.cruise.service..*)")
     public Object printExecutionTimeOfGetListMethods(ProceedingJoinPoint pjp) {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
@@ -26,11 +23,11 @@ public class ServiceStopWatchAspect {
         try {
             return pjp.proceed();
         } catch (Throwable e) {
-            LOGGER.error("Error while proceeding " + className + "#" + methodName);
+            log.error("Error while proceeding " + className + "#" + methodName);
             throw new RuntimeException();
         } finally {
             stopWatch.stop();
-            LOGGER.debug("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
+            log.debug("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
         }
     }
 }
