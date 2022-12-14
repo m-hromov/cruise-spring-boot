@@ -1,14 +1,31 @@
 package com.hromov.cruise.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.hromov.cruise.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.naming.AuthenticationException;
+
 @RestController
+@RequestMapping("/sign_in")
+@RequiredArgsConstructor
 public class SignInController {
-    @RequestMapping(value = "/sign_in", method = RequestMethod.GET)
+    private final UserService userService;
+
+    @GetMapping(value = "/")
     public ModelAndView loadPage() {
         return new ModelAndView("signIn");
+    }
+
+    @PostMapping(value = "/")
+    public ModelAndView signIn(String email, String password) {
+        ModelAndView modelAndView = new ModelAndView("index");
+        try {
+            userService.signIn(email, password);
+        } catch (AuthenticationException e) {
+            modelAndView.addObject("authFailed", true);
+        }
+        return modelAndView;
     }
 }

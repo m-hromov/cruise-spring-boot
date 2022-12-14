@@ -1,7 +1,11 @@
 package com.hromov.cruise.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,7 +34,9 @@ public class Cruise {
     private String description;
     @Column(name = "tickets_purchased")
     private Integer ticketsPurchased;
+    @ToString.Exclude
     @OneToMany(mappedBy = "cruise")
     @OrderBy("orderNumber ASC")
+    @JsonManagedReference
     private List<Route> stationList;
 }
