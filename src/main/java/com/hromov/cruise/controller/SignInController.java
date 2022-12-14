@@ -13,12 +13,12 @@ import javax.naming.AuthenticationException;
 public class SignInController {
     private final UserService userService;
 
-    @GetMapping(value = "/")
+    @GetMapping
     public ModelAndView loadPage() {
         return new ModelAndView("signIn");
     }
 
-    @PostMapping(value = "/")
+    @PostMapping
     public ModelAndView signIn(String email, String password) {
         ModelAndView modelAndView = new ModelAndView("index");
         try {

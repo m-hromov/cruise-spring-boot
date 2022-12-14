@@ -24,7 +24,7 @@ public class CruiseController {
     private final ShipService shipService;
     private final StationService stationService;
 
-    @GetMapping(value = "/")
+    @GetMapping
     public ModelAndView loadFindCruisePage() {
         List<Cruise> cruiseList = cruiseService.getCruiseList();
         ModelAndView model = new ModelAndView("findCruise");

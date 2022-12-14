@@ -4,7 +4,7 @@
     <div id="headerDiv" class="collapse navbar-collapse">
         <ul class="navbar-nav flex-row me-auto">
             <li class="nav-item my-auto">
-                <a class="navbar-brand ms-3" href="..">
+                <a class="navbar-brand ms-3" href=/">
                     <img src="" th:src="@{images/logo.png}" alt="home" height="35px"
                          width="35px"/>
                 </a>
@@ -15,12 +15,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/find_cruise">
+                <a class="nav-link" href="/cruises/">
                     Find Cruise
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/add_cruise">
+                <a class="nav-link" href="/cruises/add_cruise">
                     Add Cruise
                 </a>
             </li>
@@ -28,7 +28,7 @@
 
         <ul class="navbar-nav me-3">
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/cruise/sign_in">
+                <a class="nav-link" href="/sign_in">
                     Sign In
                 </a>
             </li>
@@ -37,7 +37,7 @@
                 <hr class="d-lg-none text-white-50">
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/cruise/sign_up">
+                <a class="nav-link" href="/sign_up">
                     Sign Up
                 </a>
             </li>
