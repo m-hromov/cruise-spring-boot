@@ -1,6 +1,5 @@
 package com.hromov.cruise.controller;
 
-import com.hromov.cruise.exception.CruiseNotFoundException;
 import com.hromov.cruise.model.Cruise;
 import com.hromov.cruise.model.Ship;
 import com.hromov.cruise.model.Station;
@@ -32,13 +31,9 @@ public class CruiseController {
         return model;
     }
 
-    @GetMapping(value = "/{cruiseId}")
+    @GetMapping(value = "{cruiseId}")
     public Cruise loadCruiseById(@PathVariable long cruiseId) {
-        try {
-            return cruiseService.findCruiseById(cruiseId);
-        } catch (CruiseNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return cruiseService.findCruiseById(cruiseId);
     }
 
     @GetMapping(value = "/add_cruise")

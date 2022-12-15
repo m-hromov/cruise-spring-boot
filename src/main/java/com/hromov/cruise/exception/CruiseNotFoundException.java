@@ -1,8 +1,9 @@
 package com.hromov.cruise.exception;
 
-import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@AllArgsConstructor
-public class CruiseNotFoundException extends Exception {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class CruiseNotFoundException extends RuntimeException {
 
 }

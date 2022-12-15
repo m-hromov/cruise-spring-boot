@@ -13,21 +13,16 @@ import org.springframework.util.StopWatch;
 @Component
 public class ServiceAspect {
     @Around("execution(public * *(..)) && within(com.hromov.cruise.service..*)")
-    public Object printExecutionTimeOfGetListMethods(ProceedingJoinPoint pjp) {
+    public Object printExecutionTimeOfGetListMethods(ProceedingJoinPoint pjp) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         String className = methodSignature.getDeclaringType().getSimpleName();
         String methodName = methodSignature.getName();
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start(pjp.toShortString());
-        try {
-            return pjp.proceed();
-        } catch (Throwable e) {
-            log.error("Error while proceeding " + className + "#" + methodName);
-            throw new RuntimeException();
-        } finally {
-            stopWatch.stop();
-            log.debug("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
-        }
+        Object obj = pjp.proceed();
+        stopWatch.stop();
+        log.debug("Execution of " + className + "#" + methodName + " took " + stopWatch.getTotalTimeSeconds() + "s");
+        return obj;
     }
 }
