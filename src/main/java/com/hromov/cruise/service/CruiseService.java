@@ -7,7 +7,11 @@ import java.util.List;
 public interface CruiseService {
     List<Cruise> getCruiseList();
 
+    Cruise findCruiseById(long cruiseId);
+
     void createCruise(Cruise cruise);
 
-    Cruise findCruiseById(long id);
+    void updateCruise(Cruise cruise);
+
+    void deleteCruise(long cruiseId);
 }

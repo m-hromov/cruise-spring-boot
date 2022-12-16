@@ -3,8 +3,6 @@ package com.hromov.cruise.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -26,7 +24,7 @@ public class Cruise {
     private LocalDate dateDeparture;
     @Column(name = "date_arrival")
     private LocalDate dateArrival;
-    @Column(name = "days_total")
+    @Column(name = "days_total", insertable = false)
     private Integer daysTotal;
     @Column(name = "price")
     private BigDecimal price;
@@ -34,6 +32,9 @@ public class Cruise {
     private String description;
     @Column(name = "tickets_purchased")
     private Integer ticketsPurchased;
+    @OneToOne
+    @JoinColumn(name = "ship_id")
+    private Ship ship;
     @ToString.Exclude
     @OneToMany(mappedBy = "cruise")
     @OrderBy("orderNumber ASC")
