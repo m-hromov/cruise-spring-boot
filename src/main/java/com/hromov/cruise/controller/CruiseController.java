@@ -8,7 +8,6 @@ import com.hromov.cruise.service.ShipService;
 import com.hromov.cruise.service.StationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,8 +45,8 @@ public class CruiseController {
     }
 
     @PostMapping(value = "/add_cruise")
-    @ResponseStatus(HttpStatus.CREATED)
     public void addCruise(@Valid @RequestBody Cruise cruise) {
+        System.out.println(cruise);
         cruiseService.createCruise(cruise);
     }
 

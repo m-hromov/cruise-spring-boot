@@ -18,8 +18,9 @@
                 </div>
                 <div class="col d-flex flex-column ">
                     <div class="text-start fw-bold fs-4">
-                        <th:block th:text="${cruise.stationList[0].station.city}"/>,
-                        <th:block th:text="${cruise.stationList[0].station.country}"/>
+                        <th:block th:text="${cruise.stationList[0].city}"/>
+                        ,
+                        <th:block th:text="${cruise.stationList[0].country}"/>
                     </div>
                     <div class="text-start fw-bold fs-6 mt-sm-0">Black Pearl</div>
                     <div class="align-items-center ">
@@ -31,8 +32,9 @@
                                 </div>
                             </div>
                             <div class="text-start align-self-center">
-                                <th:block th:text="${cruise.stationList[0].station.city}"/> ->
-                                <th:block th:text="${cruise.stationList[1].station.city}"/>
+                                <th:block th:text="${cruise.stationList[0].city}"/>
+                                ->
+                                <th:block th:text="${cruise.stationList[1].city}"/>
                             </div>
                         </div>
                     </div>
@@ -46,7 +48,9 @@
                     </p>
                     <p class="text-start text-wrap" th:text="${cruise.description}"></p>
                     <div class="row align-self-end mt-auto">
-                        <th:block th:text="${cruise.ticketsPurchased}"/>/100
+                        <th:block th:text="${cruise.ticketsPurchased}"/>
+                        /
+                        <th:block th:text="${cruise.ship.passengerCapacity}"/>
                     </div>
                     <div class="row align-self-end">
                         <th:block th:text="${cruise.price}"/>$

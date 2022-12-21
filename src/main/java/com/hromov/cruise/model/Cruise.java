@@ -1,6 +1,5 @@
 package com.hromov.cruise.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -35,9 +34,11 @@ public class Cruise {
     @OneToOne
     @JoinColumn(name = "ship_id")
     private Ship ship;
+    @ManyToMany
+    @JoinTable(name = "route",
+            joinColumns = @JoinColumn(name = "cruise_id"),
+            inverseJoinColumns = @JoinColumn(name = "station_id"))
+    @OrderColumn(name = "order_number")
     @ToString.Exclude
-    @OneToMany(mappedBy = "cruise")
-    @OrderBy("orderNumber ASC")
-    @JsonManagedReference
-    private List<Route> stationList;
+    private List<Station> stationList;
 }

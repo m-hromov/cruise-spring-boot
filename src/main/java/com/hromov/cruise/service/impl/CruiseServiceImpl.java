@@ -6,10 +6,12 @@ import com.hromov.cruise.repository.CruiseRepository;
 import com.hromov.cruise.service.CruiseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CruiseServiceImpl implements CruiseService {
     private final CruiseRepository cruiseRepository;
@@ -21,7 +23,8 @@ public class CruiseServiceImpl implements CruiseService {
 
     @Override
     public Cruise findCruiseById(long cruiseId) {
-        return cruiseRepository.findById(cruiseId).orElseThrow(CruiseNotFoundException::new);
+        return cruiseRepository.findById(cruiseId)
+                .orElseThrow(CruiseNotFoundException::new);
     }
 
     @Override
