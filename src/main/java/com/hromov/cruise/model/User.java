@@ -15,8 +15,12 @@ public class User {
     private String email;
     @Column(name = "password")
     private String password;
-    @Column(name = "password_salt")
-    private String passwordSalt;
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public enum Role {
+        USER,
+        ADMIN
+    }
 }

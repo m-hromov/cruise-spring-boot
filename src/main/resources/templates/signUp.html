@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/imports.html}"/>
+    <title>Sign up</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/header.html}"/>
+<div class="container auth-box">
+    <form action="${pageContext.request.contextPath}/cruise/do_sign_up" class="col flex-column"
+          id="signUpForm"
+          method="post">
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="first_name">
+                    <span class="h6 small bg-white text-muted px-1">First name</span>
+                </label>
+                <input class="form-control mt-2" id="first_name" name="first_name" required type="text">
+                <div class="invalid-feedback">
+                    Wrong name format
+                </div>
+            </div>
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="last_name">
+                    <span class="h6 small bg-white text-muted px-1">Last name</span>
+                </label>
+                <input class="form-control mt-2" id="last_name" name="last_name" type="text">
+                <div class="invalid-feedback">
+                    Wrong name format
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="phone">
+                    <span class="h6 small bg-white text-muted px-1">Phone</span>
+                </label>
+                <input class="form-control mt-2" id="phone" name="phone" type="text">
+                <div class="invalid-feedback">
+                    Wrong phone format
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="email">
+                    <span class="h6 small bg-white text-muted px-1">Email</span>
+                </label>
+                <input class="form-control mt-2" id="email" name="email" type="text">
+                <div class="invalid-feedback">
+                    Wrong email format
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="password">
+                    <span class="h6 small bg-white text-muted px-1">Password</span>
+                </label>
+                <input class="form-control mt-2" id="password" name="password" type="password">
+                <div class="invalid-feedback">
+                    Minimum eight characters, at least one letter and one number
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="confirm_password">
+                    <span class="h6 small bg-white text-muted px-1">Confirm password</span>
+                </label>
+                <input class="form-control mt-2" id="confirm_password" name="confirm_password"
+                       type="password">
+                <div class="invalid-feedback">
+                    Password is not the same
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="g-recaptcha px-1 mb-2" data-callback="onCheck"
+                 data-sitekey="6LdfJc0iAAAAANPYPinSKq5pGbt9EgLx0SpsUqwQ"></div>
+        </div>
+        <div class="row justify-content-end">
+            <span class="col-auto px-1 mb-2">
+                <button class="btn btn-jade" type="submit">Sign up</button>
+            </span>
+        </div>
+    </form>
+    <script th:src="@{/js/validator.js}"></script>
+    <script>
+        window.onload = (function () {
+            validateSignUp()
+        });
+    </script>
+</div>
+</body>
+</html>
