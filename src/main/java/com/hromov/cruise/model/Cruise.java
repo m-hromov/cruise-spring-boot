@@ -2,7 +2,6 @@ package com.hromov.cruise.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "cruise")
+@Table(name = "cruises")
 public class Cruise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +34,9 @@ public class Cruise {
     @JoinColumn(name = "ship_id")
     private Ship ship;
     @ManyToMany
-    @JoinTable(name = "route",
+    @JoinTable(name = "cruise_station",
             joinColumns = @JoinColumn(name = "cruise_id"),
             inverseJoinColumns = @JoinColumn(name = "station_id"))
     @OrderColumn(name = "order_number")
-    @ToString.Exclude
     private List<Station> stationList;
 }

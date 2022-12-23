@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
-@Table(name = "passenger")
+@Table(name = "passengers")
 public class Passenger {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class Passenger {
     @Column(name = "document_path")
     private String documentPath;
     @OneToOne
-    @JoinColumn(name = "user_account_id")
+    @JoinColumn(name = "user_id")
     private User user;
 }

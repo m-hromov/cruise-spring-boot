@@ -23,7 +23,6 @@ public class PassengerServiceImpl implements PassengerService {
     @Override
     public void signUp(Passenger passenger) {
         User user = passenger.getUser();
-        user.setRole(User.Role.USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(passenger.getUser());
         passengerRepository.save(passenger);
