@@ -1,5 +1,6 @@
 package com.hromov.cruise.service.impl;
 
+import com.hromov.cruise.exception.PassengerNotFoundException;
 import com.hromov.cruise.model.Passenger;
 import com.hromov.cruise.model.User;
 import com.hromov.cruise.repository.PassengerRepository;
@@ -21,15 +22,22 @@ public class PassengerServiceImpl implements PassengerService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUp(Passenger passenger) {
-        User user = passenger.getUser();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(passenger.getUser());
-        passengerRepository.save(passenger);
+    public Passenger getPassengerById(Long id) {
+        return passengerRepository.findById(id)
+                .orElseThrow(() ->
+                        new PassengerNotFoundException("Passenger with '" + id + "' is not found"));
     }
 
     @Override
     public List<Passenger> getPassengerList() {
         return passengerRepository.findAll();
+    }
+
+    @Override
+    public void signUp(Passenger passenger) {
+        User user = passenger.getUser();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(passenger.getUser());
+        passengerRepository.save(passenger);
     }
 }
