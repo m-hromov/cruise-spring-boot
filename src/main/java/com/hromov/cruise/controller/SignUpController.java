@@ -3,6 +3,7 @@ package com.hromov.cruise.controller;
 import com.hromov.cruise.model.Passenger;
 import com.hromov.cruise.service.PassengerService;
 import com.hromov.cruise.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class SignUpController {
     }
 
     @PostMapping
-    public ResponseEntity<Passenger> signUp(@RequestBody Passenger passenger) {
+    public ResponseEntity<Passenger> signUp(@Valid @RequestBody Passenger passenger) {
         passengerService.signUp(passenger);
         return new ResponseEntity<>(passenger, HttpStatus.CREATED);
     }
