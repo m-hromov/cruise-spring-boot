@@ -24,7 +24,7 @@ public class CruiseServiceImpl implements CruiseService {
     @Override
     public Cruise findCruiseById(long cruiseId) {
         return cruiseRepository.findById(cruiseId)
-                .orElseThrow(CruiseNotFoundException::new);
+                .orElseThrow(() -> new CruiseNotFoundException("Cruise '" + cruiseId + "' is not found"));
     }
 
     @Override
