@@ -2,10 +2,10 @@ package com.hromov.cruise.controller;
 
 import com.hromov.cruise.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.naming.AuthenticationException;
 
 @RestController
 @RequestMapping("/sign_in")
@@ -18,14 +18,5 @@ public class SignInController {
         return new ModelAndView("signIn");
     }
 
-    @PostMapping
-    public ModelAndView signIn(String email, String password) {
-        ModelAndView modelAndView = new ModelAndView("index");
-        try {
-            userService.signIn(email, password);
-        } catch (AuthenticationException e) {
-            modelAndView.addObject("authFailed", true);
-        }
-        return modelAndView;
-    }
+
 }

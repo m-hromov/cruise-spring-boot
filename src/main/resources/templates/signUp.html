@@ -7,7 +7,7 @@
 <body>
 <th:block th:insert="~{fragments/header.html}"/>
 <div class="container auth-box">
-    <form action="${pageContext.request.contextPath}/cruise/do_sign_up" class="col flex-column"
+    <form class="col flex-column" th:action="@{/sign_up}"
           id="signUpForm"
           method="post">
         <div class="row">

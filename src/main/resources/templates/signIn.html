@@ -6,6 +6,44 @@
 </head>
 <body>
 <th:block th:insert="~{fragments/header.html}"/>
-Sign In
+<div class="container d-flex auth-box justify-content-center align-items-center">
+
+    <form id="signInForm" method="post"
+          th:action="@{/sign_in}">
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="email">
+                    <span class="h6 small bg-white text-muted px-1">Email</span>
+                </label>
+                <input class="form-control mt-2" id="email" name="email" required type="text">
+                <div class="invalid-feedback">
+                    Wrong email format
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col px-1 mb-2">
+                <label class="ms-2 position-absolute mtext" for="password">
+                    <span class="h6 small bg-white text-muted px-1">Password</span>
+                </label>
+                <input class="form-control mt-2" id="password" name="password" required type="password">
+            </div>
+        </div>
+        <div class="row justify-content-end">
+            <span class="col-auto px-1 mb-2">
+                <button class="btn btn-jade g-recaptcha" data-callback="onSubmit"
+                        data-sitekey="6Lex-toiAAAAAB2huVa7HT-YlYeqavRXZ-dkDrk_">
+                    Sign in
+                </button>
+            </span>
+        </div>
+    </form>
+    <script th:src="@{/js/validator.js}"></script>
+    <script>
+        window.onload = (function () {
+            //validateSignIn()
+        });
+    </script>
+</div>
 </body>
 </html>

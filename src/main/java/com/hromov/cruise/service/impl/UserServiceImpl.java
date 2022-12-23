@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signIn(String email, String password) throws AuthenticationException {
-        Optional<User> optional = userRepository.findByEmail(email);
+        Optional<User> optional = userRepository.findByUsername(email);
         User user = optional.orElseThrow(AuthenticationException::new);
         String userActualPassword = user.getPassword();
         if (!passwordEncoder.matches(password, userActualPassword)) {
