@@ -10,7 +10,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ticket_id")
-    private long id;
+    private Long id;
     @OneToOne
     @JoinColumn(name = "passenger_id")
     private Passenger passenger;

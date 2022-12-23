@@ -22,7 +22,7 @@ public class CruiseServiceImpl implements CruiseService {
     }
 
     @Override
-    public Cruise findCruiseById(long cruiseId) {
+    public Cruise findCruiseById(Long cruiseId) {
         return cruiseRepository.findById(cruiseId)
                 .orElseThrow(() -> new CruiseNotFoundException("Cruise '" + cruiseId + "' is not found"));
     }
@@ -39,7 +39,7 @@ public class CruiseServiceImpl implements CruiseService {
     }
 
     @Override
-    public void deleteCruise(long cruiseId) {
+    public void deleteCruise(Long cruiseId) {
         cruiseRepository.deleteById(cruiseId);
     }
 }
