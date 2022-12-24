@@ -9,9 +9,14 @@ import com.hromov.cruise.service.StationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cruises")
@@ -20,6 +25,7 @@ public class CruiseController {
     private final CruiseService cruiseService;
     private final ShipService shipService;
     private final StationService stationService;
+    private final RestTemplate restTemplate;
 
     @GetMapping
     public ModelAndView loadFindCruisePage() {
@@ -36,7 +42,13 @@ public class CruiseController {
 
     @GetMapping(value = "/add_cruise")
     public ModelAndView loadAddCruisePage() {
-        List<Ship> shipList = shipService.getShipList();
+        List<Ship> shipList = Optional.ofNullable(
+                        restTemplate.getForObject(
+                                URI.create("http://localhost:8081/rest-data/ships"),
+                                Ship[].class))
+                .stream()
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toList());
         List<Station> stationList = stationService.getStationList();
         ModelAndView model = new ModelAndView("addCruise");
         model.addObject("shipList", shipList);
@@ -46,7 +58,6 @@ public class CruiseController {
 
     @PostMapping(value = "/add_cruise")
     public void addCruise(@Valid @RequestBody Cruise cruise) {
-        System.out.println(cruise);
         cruiseService.createCruise(cruise);
     }
 
