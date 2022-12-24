@@ -2,6 +2,7 @@ package com.hromov.cruise.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "cruises")
+@RestResource(rel = "CRUISES", path = "CrUiSeS")
 public class Cruise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
