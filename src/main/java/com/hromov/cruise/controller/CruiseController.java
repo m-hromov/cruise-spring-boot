@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cruises")
@@ -37,18 +33,13 @@ public class CruiseController {
 
     @GetMapping(value = "{cruiseId}")
     public Cruise loadCruiseById(@PathVariable long cruiseId) {
-        return cruiseService.findCruiseById(cruiseId);
+        return restTemplate.getForObject("http://localhost:8081/rest-data/CrUiSeS/{cruiseId}",
+                Cruise.class, cruiseId);
     }
 
     @GetMapping(value = "/add_cruise")
     public ModelAndView loadAddCruisePage() {
-        List<Ship> shipList = Optional.ofNullable(
-                        restTemplate.getForObject(
-                                URI.create("http://localhost:8081/rest-data/ships"),
-                                Ship[].class))
-                .stream()
-                .flatMap(Arrays::stream)
-                .collect(Collectors.toList());
+        List<Ship> shipList = shipService.getShipList();
         List<Station> stationList = stationService.getStationList();
         ModelAndView model = new ModelAndView("addCruise");
         model.addObject("shipList", shipList);

@@ -9,18 +9,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/passenger")
 @RequiredArgsConstructor
 public class PassengerController {
     private final PassengerService passengerService;
+    private final RestTemplate restTemplate;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
     public List<Passenger> loadAllPassengers() {
+        return Arrays.asList(
+                Objects.requireNonNull(
+                        restTemplate.getForObject("http://localhost:8081/passenger/alll",
+                                Passenger[].class)));
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/alll")
+    public List<Passenger> loadAlPassengers() {
         return passengerService.getPassengerList();
     }
 

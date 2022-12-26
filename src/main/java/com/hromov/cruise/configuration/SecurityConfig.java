@@ -25,14 +25,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers("/cruises/add_cruise")
-                .hasAuthority("ADMIN")
-                .anyRequest()
-                .permitAll()
-                .and()
-                .csrf()
-                .and()
+        http.authorizeHttpRequests((authorizeRequests) ->
+                        authorizeRequests.requestMatchers("/cruises/add_cruise").hasAuthority("ADMIN")
+                                .requestMatchers("/passenger/*").authenticated()
+                                .anyRequest().permitAll()
+                )
                 .formLogin()
                 .loginPage("/sign_in")
                 .failureUrl("/sign_in?error")
@@ -43,7 +40,12 @@ public class SecurityConfig {
                 .logout()
                 .invalidateHttpSession(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/sign_out", "GET"))
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .and()
+                .csrf()
+                .and()
+                .oauth2Login()
+                .loginPage("/sign_in");
         return http.build();
     }
 
@@ -51,4 +53,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(4);
     }
+
 }
