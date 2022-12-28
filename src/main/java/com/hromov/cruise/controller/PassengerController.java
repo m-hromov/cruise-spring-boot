@@ -1,5 +1,6 @@
 package com.hromov.cruise.controller;
 
+import com.hromov.cruise.messaging.impl.KafkaPassengerMessagingService;
 import com.hromov.cruise.model.Passenger;
 import com.hromov.cruise.service.PassengerService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.Objects;
 public class PassengerController {
     private final PassengerService passengerService;
     private final RestTemplate restTemplate;
+    private final KafkaPassengerMessagingService kafkaPassengerMessagingService;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/all")
@@ -41,6 +43,8 @@ public class PassengerController {
             "returnObject.user.username == authentication.name")
     @GetMapping("/{id}")
     public Passenger loadPassengerById(@PathVariable Long id) {
-        return passengerService.getPassengerById(id);
+        Passenger passenger = passengerService.getPassengerById(id);
+        kafkaPassengerMessagingService.sendPassenger(passenger);
+        return passenger;
     }
 }
