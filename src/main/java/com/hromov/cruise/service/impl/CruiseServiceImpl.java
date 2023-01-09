@@ -28,14 +28,13 @@ public class CruiseServiceImpl implements CruiseService {
     }
 
     @Override
-    public void createCruise(Cruise cruise) {
-        cruiseRepository.save(cruise);
+    public Cruise createCruise(Cruise cruise) {
+        return cruiseRepository.save(cruise);
     }
 
     @Override
-    public void updateCruise(Cruise cruise) {
-        cruiseRepository.deleteById(cruise.getId());
-        createCruise(cruise);
+    public Cruise updateCruise(Cruise cruise) {
+        return createCruise(cruise);
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.hromov.cruise.exception.PassengerNotFoundException;
 import com.hromov.cruise.model.Passenger;
 import com.hromov.cruise.model.User;
 import com.hromov.cruise.repository.PassengerRepository;
-import com.hromov.cruise.repository.UserRepository;
 import com.hromov.cruise.service.PassengerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PassengerServiceImpl implements PassengerService {
     private final PassengerRepository passengerRepository;
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -34,10 +32,9 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public void signUp(Passenger passenger) {
+    public Passenger signUp(Passenger passenger) {
         User user = passenger.getUser();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(passenger.getUser());
-        passengerRepository.save(passenger);
+        return passengerRepository.save(passenger);
     }
 }

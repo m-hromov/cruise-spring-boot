@@ -9,9 +9,9 @@ public interface CruiseService {
 
     Cruise findCruiseById(Long cruiseId);
 
-    void createCruise(Cruise cruise);
+    Cruise createCruise(Cruise cruise);
 
-    void updateCruise(Cruise cruise);
+    Cruise updateCruise(Cruise cruise);
 
     void deleteCruise(Long cruiseId);
 }

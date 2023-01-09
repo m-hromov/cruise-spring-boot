@@ -9,9 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.naming.AuthenticationException;
-import java.util.Optional;
-
 @Service
 @Transactional
 @Log4j2
@@ -19,17 +16,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
-    @Override
-    public void signIn(String email, String password) throws AuthenticationException {
-        Optional<User> optional = userRepository.findByUsername(email);
-        User user = optional.orElseThrow(AuthenticationException::new);
-        String userActualPassword = user.getPassword();
-        if (!passwordEncoder.matches(password, userActualPassword)) {
-            log.info("Attempt to sign in with " + email + "failed");
-            throw new AuthenticationException("Invalid password!");
-        }
-    }
 
     @Override
     public User signUp(User user) {

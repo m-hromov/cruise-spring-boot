@@ -9,5 +9,5 @@ public interface PassengerService {
 
     Passenger getPassengerById(Long id);
 
-    void signUp(Passenger passenger);
+    Passenger signUp(Passenger passenger);
 }

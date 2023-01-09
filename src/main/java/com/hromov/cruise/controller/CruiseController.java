@@ -8,12 +8,16 @@ import com.hromov.cruise.service.ShipService;
 import com.hromov.cruise.service.StationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@Log4j2
 @RestController
 @RequestMapping("/cruises")
 @RequiredArgsConstructor
@@ -28,13 +32,21 @@ public class CruiseController {
         List<Cruise> cruiseList = cruiseService.getCruiseList();
         ModelAndView model = new ModelAndView("findCruise");
         model.addObject("cruiseList", cruiseList);
+        log.info("Find cruise page was loaded");
         return model;
     }
 
     @GetMapping(value = "{cruiseId}")
-    public Cruise loadCruiseById(@PathVariable long cruiseId) {
-        return restTemplate.getForObject("http://localhost:8081/rest-data/CrUiSeS/{cruiseId}",
+    public Cruise loadCruiseByIdRest(@PathVariable long cruiseId, @Value("${server.port}") int port) {
+        log.info("Requested cruise with id '{}'", cruiseId);
+        return restTemplate.getForObject("http://localhost:" + port + "/rest-data/CrUiSeS/{cruiseId}",
                 Cruise.class, cruiseId);
+    }
+
+    @GetMapping(value = "/noRest/{cruiseId}")
+    public Cruise loadCruiseById(@PathVariable long cruiseId) {
+        log.info("Requested cruise with id '{}'", cruiseId);
+        return cruiseService.findCruiseById(cruiseId);
     }
 
     @GetMapping(value = "/add_cruise")
@@ -44,12 +56,15 @@ public class CruiseController {
         ModelAndView model = new ModelAndView("addCruise");
         model.addObject("shipList", shipList);
         model.addObject("stationList", stationList);
+        log.info("Add cruise page was loaded");
         return model;
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/add_cruise")
     public void addCruise(@Valid @RequestBody Cruise cruise) {
         cruiseService.createCruise(cruise);
+        log.info("Cruise {} was created", cruise);
     }
 
     @GetMapping(value = "/edit_cruise/{cruiseId}")
@@ -61,16 +76,19 @@ public class CruiseController {
         model.addObject("cruise", cruise);
         model.addObject("shipList", shipList);
         model.addObject("stationList", stationList);
+        log.info("Edit cruise '{}' page was loaded", cruise);
         return model;
     }
 
     @PutMapping(value = "/edit_cruise")
     public void editCruise(@Valid @RequestBody Cruise cruise) {
         cruiseService.updateCruise(cruise);
+        log.info("Cruise {} was edited", cruise);
     }
 
     @DeleteMapping(value = "/delete_cruise")
     public void deleteCruise(@RequestParam long cruiseId) {
         cruiseService.deleteCruise(cruiseId);
+        log.info("Cruise {} was deleted", cruiseId);
     }
 }

@@ -4,6 +4,7 @@ import com.hromov.cruise.messaging.impl.KafkaPassengerMessagingService;
 import com.hromov.cruise.model.Passenger;
 import com.hromov.cruise.service.PassengerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,23 +25,23 @@ public class PassengerController {
     private final RestTemplate restTemplate;
     private final KafkaPassengerMessagingService kafkaPassengerMessagingService;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/all")
-    public List<Passenger> loadAllPassengers() {
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('SCOPE_ADMIN')")
+    @GetMapping("/allRest")
+    public List<Passenger> loadAllPassengers(@Value("${server.port}") int port) {
         return Arrays.asList(
                 Objects.requireNonNull(
-                        restTemplate.getForObject("http://localhost:8081/passenger/alll",
+                        restTemplate.getForObject("http://localhost:" + port + "/passenger/all",
                                 Passenger[].class)));
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    @GetMapping("/alll")
+    @GetMapping("/all")
     public List<Passenger> loadAlPassengers() {
         return passengerService.getPassengerList();
     }
 
     @PostAuthorize("hasAuthority('ADMIN') || " +
-            "returnObject.user.username == authentication.name")
+                   "returnObject.user.username == authentication.name")
     @GetMapping("/{id}")
     public Passenger loadPassengerById(@PathVariable Long id) {
         Passenger passenger = passengerService.getPassengerById(id);
