@@ -1,27 +1,26 @@
 rsa:
   public-key: certificates/public.pem
   private-key: certificates/private.pem
-
 server:
-  port: 8081
-
+  port: 8082
 spring:
   application:
     name: cruise-spring
   datasource:
-    url: jdbc:postgresql://localhost:5432/cruise_spring
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
     type: org.springframework.jdbc.datasource.SimpleDriverDataSource
-    driver-class-name: org.postgresql.Driver
+    driver-class-name: org.h2.Driver
     username: MarkedOne
     password: GuysIcaughtAnOlive
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
+    defer-datasource-initialization: true
   data:
     rest:
       base-path: /rest-data
@@ -34,9 +33,9 @@ spring:
             clientSecret: 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
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+  profiles:
+    active: test
   kafka:
-    bootstrap-servers:
-      - host.docker.internal:9092
     consumer:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -46,6 +45,7 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
 logging:
   level:
     root: info
