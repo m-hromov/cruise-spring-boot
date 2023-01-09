@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "authorities")
 public class Authority implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "authority_id")
     private Long id;
     @Column(name = "authority")
