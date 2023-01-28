@@ -9,7 +9,7 @@ spring:
   application:
     name: cruise-spring
   datasource:
-    url: jdbc:postgresql://localhost:5432/cruise_spring
+    url: ${JDBC_C:jdbc:postgresql://localhost:5432/cruise_spring}
     type: org.springframework.jdbc.datasource.SimpleDriverDataSource
     driver-class-name: org.postgresql.Driver
     username: MarkedOne

@@ -26,19 +26,21 @@ public class CruiseController {
     private final ShipService shipService;
     private final StationService stationService;
     private final RestTemplate restTemplate;
+    @Value("${spring.datasource.url}")
+    private String jdbc;
 
     @GetMapping
     public ModelAndView loadFindCruisePage() {
         List<Cruise> cruiseList = cruiseService.getCruiseList();
         ModelAndView model = new ModelAndView("findCruise");
         model.addObject("cruiseList", cruiseList);
-        log.info("Find cruise page was loaded");
+        log.info("Find cruise page was loaded" + jdbc);
         return model;
     }
 
     @GetMapping(value = "{cruiseId}")
     public Cruise loadCruiseByIdRest(@PathVariable long cruiseId, @Value("${server.port}") int port) {
-        log.info("Requested cruise with id '{}'", cruiseId);
+        log.info("Requested cruises with id '{}'", cruiseId);
         return restTemplate.getForObject("http://localhost:" + port + "/rest-data/CrUiSeS/{cruiseId}",
                 Cruise.class, cruiseId);
     }
