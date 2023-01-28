@@ -40,7 +40,7 @@ public class CruiseController {
 
     @GetMapping(value = "{cruiseId}")
     public Cruise loadCruiseByIdRest(@PathVariable long cruiseId, @Value("${server.port}") int port) {
-        log.info("Requested cruises with id '{}'", cruiseId);
+        log.info("dgdgdfgdgdfgdfgdg", cruiseId);
         return restTemplate.getForObject("http://localhost:" + port + "/rest-data/CrUiSeS/{cruiseId}",
                 Cruise.class, cruiseId);
     }
